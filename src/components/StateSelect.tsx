@@ -12,7 +12,12 @@ export function StateSelect({ className = "", value, onChange }: Props) {
   return (
     <label className={`flex flex-col gap-2 ${className}`}>
       <span className="text-sm font-medium text-foreground">
-        Or pick from the list (includes federal records)
+        <span className="md:hidden">
+          Pick your state or jurisdiction
+        </span>
+        <span className="hidden md:inline">
+          Or pick from the list (includes federal records)
+        </span>
       </span>
       <select
         value={value}

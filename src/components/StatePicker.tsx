@@ -21,9 +21,6 @@ export function StatePicker() {
       <div className="hidden md:block">
         <USMap selectedCode={selected} onSelect={setSelected} />
       </div>
-      <div className="md:hidden rounded-lg bg-surface-muted p-4 text-sm text-muted-fg">
-        Pick your state below to start a guided check.
-      </div>
 
       <div className="flex flex-col sm:flex-row sm:items-end gap-4">
         <StateSelect
