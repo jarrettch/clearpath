@@ -4,9 +4,9 @@
     "sources": [
       "Clean Slate Initiative resources page (cleanslateinitiative.org/resources)",
       "National Reentry Resource Center Clean Slate Clearinghouse (nationalreentryresourcecenter.org/cleanslate)",
-      "Legal Services Corporation finder (lsc.gov)"
+      "Direct verification from each org's public website"
     ],
-    "notes": "v1 lean curation. Universal NRRC fallback shown for every state. Curated highlights for CA/NY/TX/GA only. Rasa Legal added as a low-cost ($25 attorney eligibility review) option in UT/PA/AZ. Org details verified from each org's public website at compile time."
+    "notes": "v1 lean curation. Universal NRRC fallback shown for every state. Curated highlights for CA, NY, GA. Rasa Legal added as a low-cost ($25 attorney-led eligibility review) option in UT/PA/AZ. Texas curated list intentionally empty — no high-confidence free expungement-focused orgs surfaced from homepage verification at compile time; users get the NRRC fallback. Org details verified from each org's public website at compile time on 2026-04-25; details may change."
   },
   "universal": {
     "nrrc_find_a_lawyer_url": "https://nationalreentryresourcecenter.org/cleanslate/find-a-lawyer",
@@ -14,12 +14,93 @@
     "description": "Search the National Reentry Resource Center's clearinghouse for record-clearance attorneys in your state and ZIP code."
   },
   "orgs": {
-    "CA": [],
-    "NY": [],
+    "CA": [
+      {
+        "name": "Root & Rebound",
+        "url": "https://www.rootandrebound.org",
+        "phone": "510-279-4662",
+        "focus": "Statewide reentry legal aid with dedicated record clearance / expungement clinics and a free reentry hotline.",
+        "counties_served": "statewide",
+        "cost": "free"
+      },
+      {
+        "name": "East Bay Community Law Center",
+        "url": "https://ebclc.org",
+        "phone": "510-548-4040",
+        "focus": "Clean Slate program for adult criminal record relief, anchored in Alameda County / East Bay.",
+        "counties_served": ["Alameda"],
+        "cost": "free"
+      },
+      {
+        "name": "A New Way of Life Reentry Project",
+        "url": "https://anewwayoflife.org",
+        "phone": null,
+        "focus": "Holistic reentry support including pro bono expungement legal services for women rebuilding after incarceration.",
+        "counties_served": ["Los Angeles"],
+        "cost": "free"
+      }
+    ],
+    "NY": [
+      {
+        "name": "The Bronx Defenders",
+        "url": "https://www.bronxdefenders.org",
+        "phone": "718-838-7878",
+        "focus": "Civil Action Practice including post-conviction record sealing assistance for Bronx residents. Call to confirm sealing intake.",
+        "counties_served": ["Bronx"],
+        "cost": "free"
+      },
+      {
+        "name": "Brooklyn Defender Services",
+        "url": "https://bds.org",
+        "phone": "718-254-0700",
+        "focus": "Civil Justice Practice serving Brooklyn and (post-July 2025) Queens; reentry and record-related civil work. Call to confirm sealing intake.",
+        "counties_served": ["Kings", "Queens"],
+        "cost": "free"
+      }
+    ],
     "TX": [],
-    "GA": [],
-    "UT": [],
-    "PA": [],
-    "AZ": []
+    "GA": [
+      {
+        "name": "Georgia Justice Project",
+        "url": "https://www.gjp.org",
+        "phone": "404-827-0027",
+        "focus": "Statewide record restriction (Georgia's expungement) services; runs Second Chance Desks and recurring criminal records info sessions.",
+        "counties_served": "statewide",
+        "cost": "free"
+      }
+    ],
+    "UT": [
+      {
+        "name": "Rasa Legal",
+        "url": "https://rasa-legal.com",
+        "phone": null,
+        "focus": "$25 attorney-led eligibility review for record clearance. Full representation is priced separately.",
+        "counties_served": "statewide",
+        "cost": "low_cost",
+        "cost_note": "Eligibility review only at $25; representation fees vary."
+      }
+    ],
+    "PA": [
+      {
+        "name": "Rasa Legal",
+        "url": "https://rasa-legal.com",
+        "phone": null,
+        "focus": "$25 attorney-led eligibility review for record clearance. Full representation is priced separately.",
+        "counties_served": "statewide",
+        "cost": "low_cost",
+        "cost_note": "Eligibility review only at $25; representation fees vary."
+      }
+    ],
+    "AZ": [
+      {
+        "name": "Rasa Legal",
+        "url": "https://rasa-legal.com",
+        "phone": null,
+        "focus": "$25 attorney-led eligibility review for record clearance. Full representation is priced separately.",
+        "counties_served": "statewide",
+        "cost": "low_cost",
+        "cost_note": "Eligibility review only at $25; representation fees vary."
+      }
+    ]
   }
 }
