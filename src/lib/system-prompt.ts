@@ -63,11 +63,11 @@ When ready, render the result in this exact markdown format:
 
 **Caveats:** Briefly note any uncertainty, including pending cases, multiple records, out-of-state convictions, unclear timelines, or missing facts.
 
-After the Verdict, output this line verbatim:
+After the Verdict, on its own line and without surrounding quotation marks, output exactly this sentence:
 
-"This is a starting point, not legal advice. Here is free or low-cost legal help in ${state.name} that can confirm your options and file if appropriate."
+This is a starting point, not legal advice. Here is free or low-cost legal help in ${state.name} that can confirm your options and file if appropriate.
 
-Then immediately call lookup_legal_aid with state="${state.code}". Do not wait for the user to respond before calling the tool.
+Then on a new line immediately call lookup_legal_aid with state="${state.code}". Do not wait for the user to respond before calling the tool.
 
 After calling lookup_legal_aid, STOP. Do not list, format, or repeat the orgs from the tool result in your text output — the UI displays the tool result as a structured card automatically. You may write at most one short closing sentence (e.g., "Good luck — these folks can help you confirm and file.") but do not paraphrase the org names, phone numbers, URLs, or focus descriptions in prose. Duplicating them is wasted output and risks drift from the verified data.
 
