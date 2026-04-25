@@ -40,15 +40,32 @@ export function StateChat({ state }: { state: StateEntry }) {
     <div className="flex flex-col h-[70vh] min-h-[500px] rounded-lg border border-zinc-200 bg-white">
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 && (
-          <div className="rounded-md bg-zinc-50 border border-zinc-200 p-4 text-sm text-zinc-700">
-            <p className="font-medium text-zinc-900 mb-1">
-              {state.name}
-            </p>
-            <p>{FIRST_TURN_PROMPT}</p>
-            <p className="text-xs text-zinc-500 mt-3 italic">
-              Starting point, not legal advice. ClearPath does not store your
-              answers.
-            </p>
+          <div className="space-y-3">
+            <div className="rounded-md bg-zinc-50 border border-zinc-200 p-4 text-sm text-zinc-700">
+              <p className="font-medium text-zinc-900 mb-1">{state.name}</p>
+              <p>{FIRST_TURN_PROMPT}</p>
+              <p className="text-xs text-zinc-500 mt-3 italic">
+                Starting point, not legal advice. ClearPath does not store
+                your answers.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {[
+                "It was a conviction.",
+                "It ended in dismissal or non-conviction.",
+                "I'm not sure — let me explain.",
+              ].map((chip) => (
+                <button
+                  key={chip}
+                  type="button"
+                  onClick={() => sendMessage({ text: chip })}
+                  disabled={isStreaming}
+                  className="text-sm px-3 py-1.5 rounded-full border border-zinc-300 bg-white hover:bg-zinc-100 disabled:opacity-50"
+                >
+                  {chip}
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
