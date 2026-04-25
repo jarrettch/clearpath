@@ -1,26 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Cream background, warm-neutral foreground */
+  --background: #faf7f2;
+  --foreground: #1c1917; /* stone-900 */
+
+  /* Teal/blue-green primary — trust, clarity, new beginnings */
+  --primary: #0f766e; /* teal-700 */
+  --primary-hover: #115e59; /* teal-800 */
+  --primary-fg: #ffffff;
+
+  /* Surfaces and chrome */
+  --surface: #ffffff;
+  --surface-muted: #f5f1ea; /* slightly deeper cream for empty states */
+  --border: #e7e5e4; /* stone-200 */
+  --border-strong: #d6d3d1; /* stone-300 */
+  --muted-fg: #57534e; /* stone-600 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-fg: var(--primary-fg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-muted-fg: var(--muted-fg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }

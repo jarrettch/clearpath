@@ -56,15 +56,15 @@ export function USMap() {
                 | null;
               const fill = categoryKey
                 ? CATEGORY_BY_KEY[categoryKey].color
-                : "#e5e7eb";
+                : "#e7e5e4";
               const isHovered = hoveredCode === code;
               return (
                 <path
                   key={fips}
                   d={pathD(f)}
                   fill={fill}
-                  stroke={isHovered ? "#111827" : "#ffffff"}
-                  strokeWidth={isHovered ? 2 : 0.8}
+                  stroke={isHovered ? "#0f766e" : "#faf7f2"}
+                  strokeWidth={isHovered ? 2.5 : 0.8}
                   className="cursor-pointer transition-colors"
                   onMouseEnter={() => code && setHoveredCode(code)}
                   onMouseLeave={() => setHoveredCode(null)}
@@ -88,14 +88,14 @@ export function USMap() {
           </g>
         </svg>
 
-        <aside className="border border-zinc-200 rounded-lg p-4 bg-zinc-50 min-h-[180px]">
+        <aside className="border border-border rounded-lg p-4 bg-surface-muted min-h-[180px]">
           {hoveredState ? (
             <>
-              <h3 className="text-lg font-semibold text-zinc-900">
+              <h3 className="text-lg font-semibold text-foreground">
                 {hoveredState.name}
               </h3>
               {hoveredState.relief_category && (
-                <p className="text-sm mt-1 text-zinc-700 flex items-center gap-2">
+                <p className="text-sm mt-1 text-foreground flex items-center gap-2">
                   <span
                     className="inline-block w-3 h-3 rounded-sm"
                     style={{
@@ -114,16 +114,16 @@ export function USMap() {
                 </p>
               )}
               {hoveredState.summary && (
-                <p className="text-xs mt-3 text-zinc-600 line-clamp-5">
+                <p className="text-xs mt-3 text-muted-fg line-clamp-5">
                   {hoveredState.summary.split("\n\n")[0]}
                 </p>
               )}
-              <p className="text-xs mt-3 italic text-zinc-500">
+              <p className="text-xs mt-3 italic text-primary font-medium">
                 Click to start a guided check →
               </p>
             </>
           ) : (
-            <p className="text-sm text-zinc-600">
+            <p className="text-sm text-muted-fg">
               Hover any state to see what kind of record relief is
               available there, then click to start a guided check.
               Federal records are in the dropdown below.

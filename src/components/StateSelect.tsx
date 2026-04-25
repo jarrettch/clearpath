@@ -8,7 +8,7 @@ export function StateSelect({ className = "" }: { className?: string }) {
 
   return (
     <label className={`flex flex-col gap-2 ${className}`}>
-      <span className="text-sm font-medium text-zinc-700">
+      <span className="text-sm font-medium text-foreground">
         Or pick from the list (includes federal records)
       </span>
       <select
@@ -16,7 +16,7 @@ export function StateSelect({ className = "" }: { className?: string }) {
         onChange={(e) => {
           if (e.target.value) router.push(`/state/${e.target.value}`);
         }}
-        className="block w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-400"
+        className="block w-full rounded-md border border-border-strong bg-surface px-3 py-2 text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
       >
         <option value="" disabled>
           Select a state or jurisdiction…

@@ -20,25 +20,30 @@ export default async function StatePage({
   return (
     <>
       <main className="flex-1 w-full">
-        <div className="max-w-3xl mx-auto px-6 pt-10 pb-8">
-          <div className="flex items-center justify-between gap-4 mb-6">
-            <Link
-              href="/"
-              className="flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900"
-            >
-              <span aria-hidden>←</span> Back to map
-            </Link>
-            <div className="flex items-center gap-2 text-sm">
-              <span className="font-semibold text-zinc-900">ClearPath</span>
+        <header className="max-w-3xl mx-auto px-6 pt-8 flex items-center justify-between">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-sm text-muted-fg hover:text-foreground"
+          >
+            <span aria-hidden>←</span> Back to map
+          </Link>
+          <div className="flex items-center gap-2">
+            <div className="h-7 w-7 rounded-md bg-primary text-primary-fg grid place-items-center font-semibold text-xs">
+              CP
             </div>
+            <span className="font-semibold text-foreground text-sm">
+              ClearPath
+            </span>
           </div>
+        </header>
 
+        <div className="max-w-3xl mx-auto px-6 pt-8 pb-8">
           <div className="mb-6">
-            <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">
+            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground">
               {state.name}
             </h1>
             {category && (
-              <p className="mt-2 inline-flex items-center gap-2 text-sm text-zinc-700">
+              <p className="mt-2 inline-flex items-center gap-2 text-sm text-muted-fg">
                 <span
                   className="inline-block w-3 h-3 rounded-sm border border-black/5"
                   style={{ backgroundColor: category.color }}
@@ -51,9 +56,9 @@ export default async function StatePage({
 
           <StateChat state={state} />
 
-          <p className="mt-4 text-xs text-zinc-500">
-            ClearPath does not save your answers. Closing this page clears the
-            conversation.
+          <p className="mt-4 text-xs text-muted-fg">
+            ClearPath does not save your answers. Closing this page clears
+            the conversation.
           </p>
         </div>
       </main>

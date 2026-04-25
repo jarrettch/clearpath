@@ -37,14 +37,16 @@ export function StateChat({ state }: { state: StateEntry }) {
   const isStreaming = status === "streaming" || status === "submitted";
 
   return (
-    <div className="flex flex-col h-[70vh] min-h-[500px] rounded-lg border border-zinc-200 bg-white">
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div className="flex flex-col h-[70vh] min-h-[500px] rounded-xl border border-border bg-surface shadow-sm">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
         {messages.length === 0 && (
           <div className="space-y-3">
-            <div className="rounded-md bg-zinc-50 border border-zinc-200 p-4 text-sm text-zinc-700">
-              <p className="font-medium text-zinc-900 mb-1">{state.name}</p>
+            <div className="rounded-lg bg-surface-muted border border-border p-4 text-sm text-foreground">
+              <p className="font-semibold text-foreground mb-1">
+                {state.name}
+              </p>
               <p>{FIRST_TURN_PROMPT}</p>
-              <p className="text-xs text-zinc-500 mt-3 italic">
+              <p className="text-xs text-muted-fg mt-3 italic">
                 Starting point, not legal advice. ClearPath does not store
                 your answers.
               </p>
@@ -60,7 +62,7 @@ export function StateChat({ state }: { state: StateEntry }) {
                   type="button"
                   onClick={() => sendMessage({ text: chip })}
                   disabled={isStreaming}
-                  className="text-sm px-3 py-1.5 rounded-full border border-zinc-300 bg-white hover:bg-zinc-100 disabled:opacity-50"
+                  className="text-sm px-3 py-1.5 rounded-full border border-border-strong bg-surface text-foreground hover:bg-surface-muted hover:border-primary/50 disabled:opacity-50 transition-colors"
                 >
                   {chip}
                 </button>
@@ -81,17 +83,14 @@ export function StateChat({ state }: { state: StateEntry }) {
             <div
               className={
                 m.role === "user"
-                  ? "max-w-[85%] rounded-lg bg-zinc-900 text-white px-4 py-2 text-sm"
-                  : "max-w-full w-full rounded-lg bg-zinc-50 border border-zinc-200 px-4 py-3 text-sm text-zinc-900"
+                  ? "max-w-[85%] rounded-2xl bg-primary text-primary-fg px-4 py-2 text-sm shadow-sm"
+                  : "max-w-full w-full rounded-xl bg-surface-muted border border-border px-4 py-3 text-sm text-foreground"
               }
             >
               {m.parts.map((part, idx) => {
                 if (part.type === "text") {
                   return (
-                    <Streamdown
-                      key={idx}
-                      className="prose prose-sm max-w-none prose-zinc"
-                    >
+                    <Streamdown key={idx} className="text-sm leading-relaxed">
                       {part.text}
                     </Streamdown>
                   );
@@ -105,11 +104,14 @@ export function StateChat({ state }: { state: StateEntry }) {
                       />
                     );
                   }
-                  if (part.state === "input-streaming" || part.state === "input-available") {
+                  if (
+                    part.state === "input-streaming" ||
+                    part.state === "input-available"
+                  ) {
                     return (
                       <p
                         key={idx}
-                        className="text-xs text-zinc-500 italic mt-2"
+                        className="text-xs text-muted-fg italic mt-2"
                       >
                         Looking up legal help…
                       </p>
@@ -117,7 +119,7 @@ export function StateChat({ state }: { state: StateEntry }) {
                   }
                   if (part.state === "output-error") {
                     return (
-                      <p key={idx} className="text-xs text-red-600 mt-2">
+                      <p key={idx} className="text-xs text-red-700 mt-2">
                         Couldn&apos;t load legal aid right now.
                       </p>
                     );
@@ -130,8 +132,8 @@ export function StateChat({ state }: { state: StateEntry }) {
         ))}
 
         {isStreaming && messages.at(-1)?.role !== "assistant" && (
-          <div className="flex items-center gap-2 text-sm text-zinc-500">
-            <div className="h-2 w-2 rounded-full bg-zinc-400 animate-pulse" />
+          <div className="flex items-center gap-2 text-sm text-muted-fg">
+            <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
             Thinking…
           </div>
         )}
@@ -147,7 +149,7 @@ export function StateChat({ state }: { state: StateEntry }) {
 
       <form
         onSubmit={submit}
-        className="border-t border-zinc-200 p-3 flex items-center gap-2"
+        className="border-t border-border p-3 flex items-center gap-2 bg-surface rounded-b-xl"
       >
         <input
           type="text"
@@ -158,13 +160,13 @@ export function StateChat({ state }: { state: StateEntry }) {
               ? "Conviction or non-conviction?"
               : "Type your answer…"
           }
-          className="flex-1 rounded-md border border-zinc-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+          className="flex-1 rounded-md border border-border-strong bg-surface px-3 py-2 text-sm text-foreground placeholder:text-muted-fg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
           disabled={isStreaming}
         />
         <button
           type="submit"
           disabled={isStreaming || !input.trim()}
-          className="rounded-md bg-zinc-900 text-white text-sm font-medium px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-zinc-800"
+          className="rounded-md bg-primary hover:bg-primary-hover text-primary-fg text-sm font-medium px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           Send
         </button>

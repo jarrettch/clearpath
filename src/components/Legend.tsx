@@ -10,7 +10,7 @@ export function Legend() {
             style={{ backgroundColor: c.color }}
             aria-hidden
           />
-          <span className="text-zinc-700">{c.label}</span>
+          <span className="text-foreground">{c.label}</span>
         </div>
       ))}
     </div>
