@@ -1,5 +1,4 @@
-import { USMap } from "@/components/USMap";
-import { StateSelect } from "@/components/StateSelect";
+import { StatePicker } from "@/components/StatePicker";
 import { Legend } from "@/components/Legend";
 import { Footer } from "@/components/Footer";
 
@@ -69,29 +68,17 @@ export default function Home() {
         <section className="max-w-6xl mx-auto px-6 pb-12">
           <div className="flex items-end justify-between mb-4">
             <div>
-              <h2 className="text-sm uppercase tracking-wider text-muted-fg font-semibold">
-                Step 1
-              </h2>
               <p className="text-xl font-semibold text-foreground">
                 Pick your state
               </p>
             </div>
             <p className="text-sm text-muted-fg hidden sm:block">
-              Hover any state · click to start
+              Hover to preview · click to select
             </p>
           </div>
 
           <div className="rounded-xl bg-surface border border-border p-4 sm:p-6 shadow-sm">
-            <div className="hidden md:block">
-              <USMap />
-            </div>
-            <div className="md:hidden rounded-lg bg-surface-muted p-4 text-sm text-muted-fg">
-              Pick your state below to start a guided check.
-            </div>
-
-            <div className="mt-6">
-              <StateSelect className="max-w-md" />
-            </div>
+            <StatePicker />
 
             <div className="mt-8 pt-6 border-t border-border">
               <Legend />

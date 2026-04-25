@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
 import { geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import type { FeatureCollection, Geometry } from "geojson";
@@ -18,8 +17,12 @@ import {
 const WIDTH = 975;
 const HEIGHT = 610;
 
-export function USMap() {
-  const router = useRouter();
+type Props = {
+  selectedCode: string | null;
+  onSelect: (code: string) => void;
+};
+
+export function USMap({ selectedCode, onSelect }: Props) {
   const [hoveredCode, setHoveredCode] = useState<string | null>(null);
 
   const { features, pathD } = useMemo(() => {
@@ -35,7 +38,8 @@ export function USMap() {
     };
   }, []);
 
-  const hoveredState = hoveredCode ? getState(hoveredCode) : null;
+  const previewCode = hoveredCode ?? selectedCode;
+  const previewState = previewCode ? getState(previewCode) : null;
 
   return (
     <div className="flex flex-col gap-4">
@@ -57,23 +61,37 @@ export function USMap() {
               const fill = categoryKey
                 ? CATEGORY_BY_KEY[categoryKey].color
                 : "#e7e5e4";
-              const isHovered = hoveredCode === code;
+              const isSelected = selectedCode === code;
               return (
                 <path
                   key={fips}
                   d={pathD(f)}
                   fill={fill}
-                  stroke={isHovered ? "#0f766e" : "#faf7f2"}
-                  strokeWidth={isHovered ? 2.5 : 0.8}
-                  className="cursor-pointer transition-colors"
+                  stroke={isSelected ? "#0f766e" : "#faf7f2"}
+                  strokeWidth={isSelected ? 2.5 : 0.8}
+                  className="cursor-pointer transition-[stroke,stroke-width] duration-100 focus:outline-none focus-visible:outline-none"
+                  style={{ outline: "none" }}
                   onMouseEnter={() => code && setHoveredCode(code)}
                   onMouseLeave={() => setHoveredCode(null)}
                   onFocus={() => code && setHoveredCode(code)}
                   onBlur={() => setHoveredCode(null)}
-                  onClick={() => code && router.push(`/state/${code}`)}
+                  onClick={(e) => {
+                    if (code) {
+                      onSelect(code);
+                      // Drop focus so the browser default outline doesn't hang on after click.
+                      (e.currentTarget as SVGPathElement).blur();
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (code && (e.key === "Enter" || e.key === " ")) {
+                      e.preventDefault();
+                      onSelect(code);
+                    }
+                  }}
                   tabIndex={code ? 0 : -1}
                   role={code ? "button" : undefined}
                   aria-label={entry?.name}
+                  aria-pressed={isSelected || undefined}
                 >
                   <title>
                     {`${entry?.name ?? ""}${
@@ -89,44 +107,50 @@ export function USMap() {
         </svg>
 
         <aside className="border border-border rounded-lg p-4 bg-surface-muted min-h-[180px]">
-          {hoveredState ? (
+          {previewState ? (
             <>
               <h3 className="text-lg font-semibold text-foreground">
-                {hoveredState.name}
+                {previewState.name}
               </h3>
-              {hoveredState.relief_category && (
+              {previewState.relief_category && (
                 <p className="text-sm mt-1 text-foreground flex items-center gap-2">
                   <span
                     className="inline-block w-3 h-3 rounded-sm"
                     style={{
                       backgroundColor:
                         CATEGORY_BY_KEY[
-                          hoveredState.relief_category as ReliefCategoryKey
+                          previewState.relief_category as ReliefCategoryKey
                         ].color,
                     }}
                     aria-hidden
                   />
                   {
                     CATEGORY_BY_KEY[
-                      hoveredState.relief_category as ReliefCategoryKey
+                      previewState.relief_category as ReliefCategoryKey
                     ].label
                   }
                 </p>
               )}
-              {hoveredState.summary && (
+              {previewState.summary && (
                 <p className="text-xs mt-3 text-muted-fg line-clamp-5">
-                  {hoveredState.summary.split("\n\n")[0]}
+                  {previewState.summary.split("\n\n")[0]}
                 </p>
               )}
-              <p className="text-xs mt-3 italic text-primary font-medium">
-                Click to start a guided check →
-              </p>
+              {selectedCode === previewCode ? (
+                <p className="text-xs mt-3 italic text-primary font-medium">
+                  Selected — use the button below to start.
+                </p>
+              ) : (
+                <p className="text-xs mt-3 italic text-muted-fg">
+                  Click to select.
+                </p>
+              )}
             </>
           ) : (
             <p className="text-sm text-muted-fg">
-              Hover any state to see what kind of record relief is
-              available there, then click to start a guided check.
-              Federal records are in the dropdown below.
+              Hover any state to preview record-relief availability there,
+              then click to select. Federal records are in the dropdown
+              below.
             </p>
           )}
         </aside>
