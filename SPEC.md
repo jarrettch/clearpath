@@ -21,7 +21,7 @@ Help people understand whether they may qualify for record relief in their state
 [2] State page — Guided intake
     ↓ AI asks targeted questions one at a time, grounded in that state's profile
 [3] Eligibility result
-    ↓ verdict + confidence + reasoning + source citations + caveats
+    ↓ verdict + confidence + reasoning + source references + caveats
 [4] Resources
     ↓ legal aid orgs in that state, surfaced via tool call mid-conversation
 ```
@@ -104,7 +104,7 @@ Coverage so far: 52/52 entries (50 states + DC + Federal). All have category, al
         phone: string | null,
         focus: string,                  // 1-line description, e.g. "Statewide reentry & expungement clinic"
         counties_served: string[] | "statewide",
-        cost: "free" | "low_cost",      // Rasa is "low_cost" ($25 review); legal aid is "free"
+        cost: "free" | "low_cost",      // Rasa is "low_cost" ($25 eligibility review); legal aid is "free"
       }
     ]
   }
@@ -113,9 +113,9 @@ Coverage so far: 52/52 entries (50 states + DC + Federal). All have category, al
 
 **v1 sourcing strategy:**
 
-1. **Universal fallback:** every state gets the NRRC find-a-lawyer link. NRRC's tool is JS-rendered (not scrape-friendly), but it's the comprehensive, government-backed answer for all 50 states + territories. Deep-linking to it is honest and covers the "no curated data" case.
+1. **Universal fallback:** every state gets the NRRC find-a-lawyer link. NRRC's tool is JS-rendered (not scrape-friendly), but it's a national clearinghouse resource covering all 50 states + territories. Deep-linking to it is honest and covers the "no curated data" case.
 2. **Curated highlights for CA, NY, TX, GA:** 2–3 vetted free legal aid orgs each. Hand-curated, contact details verified via direct WebFetch of each org's site.
-3. **Rasa Legal** added as a `low_cost` option for **UT, PA, AZ** — they're a tech-driven legal services company offering $25 expert eligibility reviews. Strengthens the connector framing (we're agnostic about who helps you, free or low-cost).
+3. **Rasa Legal** added as a `low_cost` option for **UT, PA, AZ** — they offer a **$25 eligibility review by a licensed attorney**. Copy must stay scoped to the eligibility review; do NOT imply the full clearance process costs $25 (their broader representation flow is priced separately). Strengthens the connector framing (we're agnostic about who helps you, free or low-cost).
 
 The `lookup_legal_aid` tool always returns `{ universal, curated_orgs[] }`. The UI renders curated orgs as resource cards above a "more options for {STATE}" link to NRRC.
 
@@ -193,7 +193,7 @@ Tool-step parts render in the UI as a structured resource card (org name, phone,
 
 | Route | Purpose |
 |---|---|
-| `/` | Landing + D3 US choropleth map. Hero includes one population stat sourced from Clean Slate Initiative / Paper Prisons (e.g. "In Maryland, 98% of people eligible for expungement never get it" — *Paper Prisons Initiative, Second Chance Gap research*). Hover shows state + category summary. Click → `/state/{code}`. |
+| `/` | Landing + D3 US choropleth map. Hero subhead: *"Answer a few plain-language questions, get a state-specific starting-point read, and connect with legal help that can confirm your options."* Includes one **national-level** stat from Paper Prisons Initiative research (e.g., "fewer than 10% of people eligible for petition-based record relief actually receive it" — citing Paper Prisons / Chien's Second Chance Gap research). Avoid state-specific percentages unless pinned to a dated report URL. Hover shows state + category summary. Click → `/state/{code}`. |
 | `/state/[code]` | Chat interface. State name + category badge in header. Intake → eligibility → tool-rendered resources. |
 | `/about` (stretch) | Mission, attribution, disclaimer in long form. |
 
@@ -231,7 +231,7 @@ Rendered as a distinct UI block after the model reaches a read (not mid-conversa
   - *"High confidence based on what you've shared"* — when the state's rules are clear and the user's answers map unambiguously.
   - *"Needs human review — your situation has details that vary by county/judge"* — when the state law has discretionary elements (e.g., judge's weighing test), county-level variation, or the user's facts triggered a borderline case.
 - **Reasoning:** 2–4 sentence plain-language explanation of which rule applies and why.
-- **Source citations:** 1–3 references from the state profile (quoted or paraphrased with a "from the Restoration of Rights Project profile for {STATE}" attribution).
+- **Source references:** 1–3 references from the state profile (quoted or paraphrased with a "from the Restoration of Rights Project profile for {STATE}" attribution). Avoid the term "statutory citations" — we're not showing precise section numbers.
 - **Caveats:** anything the user mentioned that introduces uncertainty (multi-state, pending case, etc.).
 - **Next step CTA:** "See free legal help in {STATE}" → triggers `lookup_legal_aid` tool call and renders resource cards.
 
