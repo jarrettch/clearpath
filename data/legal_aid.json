@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "compiled_at": "2026-04-25",
+    "sources": [
+      "Clean Slate Initiative resources page (cleanslateinitiative.org/resources)",
+      "National Reentry Resource Center Clean Slate Clearinghouse (nationalreentryresourcecenter.org/cleanslate)",
+      "Legal Services Corporation finder (lsc.gov)"
+    ],
+    "notes": "v1 lean curation. Universal NRRC fallback shown for every state. Curated highlights for CA/NY/TX/GA only. Rasa Legal added as a low-cost ($25 attorney eligibility review) option in UT/PA/AZ. Org details verified from each org's public website at compile time."
+  },
+  "universal": {
+    "nrrc_find_a_lawyer_url": "https://nationalreentryresourcecenter.org/cleanslate/find-a-lawyer",
+    "label": "Clean Slate Clearinghouse — Find a Lawyer",
+    "description": "Search the National Reentry Resource Center's clearinghouse for record-clearance attorneys in your state and ZIP code."
+  },
+  "orgs": {
+    "CA": [],
+    "NY": [],
+    "TX": [],
+    "GA": [],
+    "UT": [],
+    "PA": [],
+    "AZ": []
+  }
+}
